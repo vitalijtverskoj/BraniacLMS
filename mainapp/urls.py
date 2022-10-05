@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import *
 from mainapp.apps import MainappConfig
+
+from .views import *
 
 app_name = MainappConfig.name
 
