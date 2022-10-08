@@ -16,7 +16,17 @@ class BaseModel(models.Model):
         self.save()
 
 
+class NewsManager(models.Manager):
+    def delete(self):
+        pass
+
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted=False)
+
+
 class News(BaseModel):
+    object = NewsManager()
+
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     preamble = models.CharField(max_length=1024, verbose_name='Вступление')
     body = models.TextField(blank=True, null=True, verbose_name='Содержимое')
