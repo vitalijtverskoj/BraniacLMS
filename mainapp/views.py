@@ -17,7 +17,7 @@ class NewsPageView(TemplateView):
         # context['description'] = 'Предварительное описание новости'
         # context['news_data'] = datetime.now()
         # context['range'] = range(5)
-        context['news'] = News.object.all()
+        context['news'] = News.objects.all()
         return context
 
 

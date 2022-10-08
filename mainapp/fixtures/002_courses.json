@@ -1,6 +1,6 @@
 [
   {
-    "model": "mainapp.courses",
+    "model": "mainapp.course",
     "pk": 1,
     "fields": {
       "name": "Web Python",
@@ -8,12 +8,12 @@
       "description_as_markdown": true,
       "cost": "10000.50",
       "cover": "img/course001.jpg",
-      "created": "2021-07-11T08:24:53.084Z",
-      "updated": "2021-07-11T09:06:35.322Z"
+      "created_at": "2021-07-11T08:24:53.084Z",
+      "updated_at": "2021-07-11T09:06:35.322Z"
     }
   },
   {
-    "model": "mainapp.courses",
+    "model": "mainapp.course",
     "pk": 2,
     "fields": {
       "name": "Web Golang",
@@ -21,12 +21,12 @@
       "description_as_markdown": false,
       "cost": "9009.99",
       "cover": "img/course002.jpg",
-      "created": "2021-07-11T08:28:07.397Z",
-      "updated": "2021-07-11T09:06:40.127Z"
+      "created_at": "2021-07-11T08:28:07.397Z",
+      "updated_at": "2021-07-11T09:06:40.127Z"
     }
   },
   {
-    "model": "mainapp.courses",
+    "model": "mainapp.course",
     "pk": 3,
     "fields": {
       "name": "Web JavaScript",
@@ -34,12 +34,12 @@
       "description_as_markdown": true,
       "cost": "2500.15",
       "cover": "img/course003.jpg",
-      "created": "2021-07-11T08:31:20.301Z",
-      "updated": "2021-07-11T09:06:46.902Z"
+      "created_at": "2021-07-11T08:31:20.301Z",
+      "updated_at": "2021-07-11T09:06:46.902Z"
     }
   },
   {
-    "model": "mainapp.courses",
+    "model": "mainapp.course",
     "pk": 4,
     "fields": {
       "name": "Web Java",
@@ -47,12 +47,12 @@
       "description_as_markdown": false,
       "cost": "10000.00",
       "cover": "img/course004.jpg",
-      "created": "2021-07-11T08:34:10.771Z",
-      "updated": "2021-07-11T09:06:52.015Z"
+      "created_at": "2021-07-11T08:34:10.771Z",
+      "updated_at": "2021-07-11T09:06:52.015Z"
     }
   },
   {
-    "model": "mainapp.courses",
+    "model": "mainapp.course",
     "pk": 5,
     "fields": {
       "name": "Web PHP",
@@ -60,12 +60,12 @@
       "description_as_markdown": false,
       "cost": "9500.78",
       "cover": "img/course005.jpg",
-      "created": "2021-07-11T08:36:21.087Z",
-      "updated": "2021-07-11T09:06:57.580Z"
+      "created_at": "2021-07-11T08:36:21.087Z",
+      "updated_at": "2021-07-11T09:06:57.580Z"
     }
   },
   {
-    "model": "mainapp.courses",
+    "model": "mainapp.course",
     "pk": 6,
     "fields": {
       "name": "Python AI",
@@ -73,12 +73,12 @@
       "description_as_markdown": true,
       "cost": "6660.66",
       "cover": "img/course006.jpg",
-      "created": "2021-07-11T08:39:15.369Z",
-      "updated": "2021-07-11T09:07:04.253Z"
+      "created_at": "2021-07-11T08:39:15.369Z",
+      "updated_at": "2021-07-11T09:07:04.253Z"
     }
   },
   {
-    "model": "mainapp.courses",
+    "model": "mainapp.course",
     "pk": 7,
     "fields": {
       "name": "DevOps",
@@ -86,12 +86,12 @@
       "description_as_markdown": true,
       "cost": "7770.77",
       "cover": "img/course007.jpg",
-      "created": "2021-07-11T08:40:33.347Z",
-      "updated": "2021-07-11T09:07:11.184Z"
+      "created_at": "2021-07-11T08:40:33.347Z",
+      "updated_at": "2021-07-11T09:07:11.184Z"
     }
   },
   {
-    "model": "mainapp.courses",
+    "model": "mainapp.course",
     "pk": 8,
     "fields": {
       "name": "3D-моделирование",
@@ -99,8 +99,8 @@
       "description_as_markdown": true,
       "cost": "5900.00",
       "cover": "img/no_image.svg",
-      "created": "2021-07-11T08:58:28.830Z",
-      "updated": "2021-07-11T09:07:16.651Z"
+      "created_at": "2021-07-11T08:58:28.830Z",
+      "updated_at": "2021-07-11T09:07:16.651Z"
     }
   }
 ]
