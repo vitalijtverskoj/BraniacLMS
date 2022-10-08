@@ -40,7 +40,14 @@ class News(BaseModel):
         verbose_name_plural = 'новости'
 
 
+class CoursesManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted=False)
+
+
 class Course(BaseModel):
+    objects = CoursesManager()
+
     name = models.CharField(max_length=256, verbose_name='Название')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
     description_as_markdown = models.BooleanField(verbose_name='Способ разметки', default=False)
