@@ -27,6 +27,7 @@ urlpatterns = [
     path("", RedirectView.as_view(url="mainapp/")),
     path("mainapp/", include("mainapp.urls", namespace=MainappConfig.name)),
     path("authapp/", include("authapp.urls", namespace=AuthappConfig.name)),
+    path("social_auth/", include('social_django.urls', namespace='social')),
 ]
 
 if settings.DEBUG:

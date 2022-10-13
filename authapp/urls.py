@@ -1,12 +1,12 @@
 from authapp.apps import AuthappConfig
 from django.urls import path
-from authapp.views import LoginView, RegisterView, LogoutView, EditView
+from authapp.views import CustomLoginView, RegisterView, CustomLogoutView, EditView
 
 app_name = AuthappConfig.name
 
 urlpatterns = [
-    path('login/', LoginView.as_view(), name='login'),
+    path('login/', CustomLoginView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', CustomLogoutView.as_view(), name='logout'),
     path('edit/', EditView.as_view(), name='edit'),
 ]
