@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView
+
 # from datetime import datetime
 from mainapp import models as mod
 from django.shortcuts import get_object_or_404
@@ -13,7 +14,6 @@ class NewsPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         context['news'] = mod.News.objects.all()[:5]
         return context
 
