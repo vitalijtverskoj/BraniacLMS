@@ -1,5 +1,4 @@
 from django.views.generic import TemplateView
-
 # from datetime import datetime
 from mainapp import models as mod
 from django.shortcuts import get_object_or_404
@@ -14,6 +13,7 @@ class NewsPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
         context['news'] = mod.News.objects.all()[:5]
         return context
 
@@ -28,7 +28,7 @@ class NewsPageView(TemplateView):
 
 
 class LoginPageView(TemplateView):
-    template_name = "mainapp/login.html"
+    template_name = "mainapp/../authapp/templates/authapp/login.html"
 
 
 class ContactsPageView(TemplateView):
