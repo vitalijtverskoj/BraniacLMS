@@ -1,3 +1,4 @@
 from django.contrib import admin
+from mainapp.models import News, Course, Lesson, CourseTeachers
 
-# Register your models here.
+admin.site.register(News)
