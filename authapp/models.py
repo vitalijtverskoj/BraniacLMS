@@ -11,7 +11,7 @@ def users_avatars_path(instanse, filename):
     #  MEDIA_ROOT / user_<username> / avatars / <filename>
     num = int(time() * 1000)
     suff = Path(filename).suffix
-    return f"user_{0}/avatars/{1}".format(instanse.username, f"pic_{num}{suff}")
+    return "user_{0}/avatars/{1}".format(instanse.username, f"pic_{num}{suff}")
 
 
 class User(AbstractUser):
@@ -22,4 +22,3 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
-

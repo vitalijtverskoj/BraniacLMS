@@ -25,7 +25,7 @@ class NewsManager(models.Manager):
 
 
 class News(BaseModel):
-    objects = NewsManager()
+    # objects = NewsManager()
 
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     preamble = models.CharField(max_length=1024, verbose_name='Вступление')
