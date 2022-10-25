@@ -39,7 +39,7 @@ class CustomUserCreationForm(UserCreationForm):
         return data
 
 
-class CustomUserChangeForm(forms.ModelForm):
+class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = get_user_model()
         fields = (
