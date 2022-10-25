@@ -1,7 +1,16 @@
+import logging
+
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.http import FileResponse
+from django.views import View
 from django.views.generic import TemplateView
+
+from config import settings
 # from datetime import datetime
 from mainapp import models as mod
 from django.shortcuts import get_object_or_404
+
+logger = logging.getLogger(__name__)
 
 
 class MainPageView(TemplateView):
@@ -13,7 +22,7 @@ class NewsPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
+
         context['news'] = mod.News.objects.all()[:5]
         return context
 
@@ -65,3 +74,29 @@ class NewsWithPaginatorView(NewsPageView):
         context = super().get_context_data(page=page, **kwargs)
         context['page_num'] = page
         return context
+
+
+class LogView(UserPassesTestMixin, TemplateView):
+    template_name = 'mainapp/logs.html'
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        log_lines = []
+        with open(settings.BASE_DIR / 'log/main_log.log') as log_file:
+            for i, line in enumerate(log_file):
+                if i == 1000:
+                    break
+                log_lines.insert(0, line)
+            context_data['logs'] = log_lines
+        return context_data
+
+
+class LogDownloadView(UserPassesTestMixin, View):
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    def get(self, *args, **kwargs):
+        return FileResponse(open(settings.LOG_FILE, "rb"))

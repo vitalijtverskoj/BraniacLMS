@@ -15,5 +15,9 @@ urlpatterns = [
     path("news/<int:page>/", NewsWithPaginatorView.as_view(), name='news_paginator'),
     # path("news/<int:pk>/", NewsPageDetailView.as_view(), name="news_detail"),
     path("courses_list/", CoursesListPageView.as_view(), name='courses'),
-    # path("courses_list/<int:pk>/", CoursesDetailView.as_view(), name='courses_detail')
+    # path("courses_list/<int:pk>/", CoursesDetailView.as_view(), name='courses_detail'),
+
+    # Logs
+    path('logs/', LogView.as_view(), name='logs_list'),
+    path('logs/download/', LogDownloadView.as_view(), name='logs_download'),
 ]
