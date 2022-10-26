@@ -9,13 +9,18 @@ app_name = MainappConfig.name
 urlpatterns = [
     path("", MainPageView.as_view(), name='main'),
     path("login/", LoginPageView.as_view(), name='login'),
-    path("doc_site/", DocSitePageView.as_view(), name='docs'),
     path("contacts/", ContactsPageView.as_view(), name='contacts'),
+    path("doc_site/", DocSitePageView.as_view(), name='docs'),
+
+    # Courses
+    path("courses_list/", CoursesListPageView.as_view(), name='courses'),
+    # path("courses_list/<int:pk>/", CoursesDetailView.as_view(), name='courses_detail'),
+
+
+    # News
     path("news/", NewsPageView.as_view(), name='news'),
     path("news/<int:page>/", NewsWithPaginatorView.as_view(), name='news_paginator'),
     # path("news/<int:pk>/", NewsPageDetailView.as_view(), name="news_detail"),
-    path("courses_list/", CoursesListPageView.as_view(), name='courses'),
-    # path("courses_list/<int:pk>/", CoursesDetailView.as_view(), name='courses_detail'),
 
     # Logs
     path('logs/', LogView.as_view(), name='logs_list'),
