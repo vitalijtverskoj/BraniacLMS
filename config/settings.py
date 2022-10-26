@@ -26,7 +26,12 @@ SECRET_KEY = "django-insecure-5oeer-lw_u4jkld)ini7y2546e)ln1ltc!o#53ikf5h^29n2jj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+if DEBUG:
+    INTERNAL_IPS = [
+        '127.0.0.1'
+    ]
 
 # Application definition
 
@@ -39,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "crispy_forms",
+    "debug_toolbar",
     "social_django",
 
     "mainapp",
@@ -53,6 +59,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware"
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -162,7 +169,7 @@ LOGGING = {
     },
     "handlers": {
         "file": {
-            "level": "INFO",
+            "level": "DEBUG",
             "class": "logging.FileHandler",
             "filename": LOG_FILE,
             "formatter": "console",
@@ -170,10 +177,21 @@ LOGGING = {
         "console": {"class": "logging.StreamHandler", "formatter": "console"},
     },
     "loggers": {
-        "django": {"level": "INFO", "handlers": ["file", "console"]},
-        # "mainapp": {
-        #     "level": "DEBUG",
-        #     "handlers": ["file"],
-        # },
+        "django": {"level": "INFO", "handlers": ["console"]},
+        "mainapp": {
+            "level": "DEBUG",
+            "handlers": ["file"],
+        },
     },
+}
+# "django": {"level": "INFO", "handlers": ["file", "console"]},
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
 }
