@@ -22,32 +22,35 @@
                     <a class="nav-link" href="{% url 'mainapp:contacts' %}">Контакты</a>
                 </li>
                 {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="ddProfile" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        Профиль
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="ddProfile">
-                        <a class="dropdown-item" href="{% url 'authapp:edit' pk=request.user.pk %}">Редактировать профиль</a>
-                        <a class="dropdown-item" href="#">Мои курсы</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Модерация</a>
-                        {% if user.is_superuser %}
-                            <a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">Административный
-                                раздел</a>
-                        {% endif %}
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'authapp:logout' %}">Выход</a>
-                    </div>
-                </li>
-                <li class="nav-item {% if request.resolver_match.view_name == 'authapp:edit' %}active{% endif %}">
-                    <a class="nav-link"
-                       href="{% url 'authapp:edit' pk=request.user.pk %}">{{ user.first_name|default:user.username }}</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link"
-                       href="{% url 'authapp:logout' %}">Выход</a>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="ddProfile" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Профиль
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="ddProfile">
+                            <a class="dropdown-item" href="{% url 'authapp:edit' pk=request.user.pk %}">Редактировать
+                                профиль</a>
+                            <a class="dropdown-item" href="#">Мои курсы</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Модерация</a>
+                            {% if user.is_superuser %}
+                                <a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">Административный
+                                    раздел</a>
+                                <a class="dropdown-item" href="{% url 'mainapp:logs_list' %}"
+                                   target="_blank">Лог</a>
+                            {% endif %}
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'authapp:logout' %}">Выход</a>
+                        </div>
+                    </li>
+                    <li class="nav-item {% if request.resolver_match.view_name == 'authapp:edit' %}active{% endif %}">
+                        <a class="nav-link"
+                           href="{% url 'authapp:edit' pk=request.user.pk %}">{{ user.first_name|default:user.username }}</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link"
+                           href="{% url 'authapp:logout' %}">Выход</a>
+                    </li>
                 {% else %}
                     <li class="nav-item ">
                         <a class="nav-link"
