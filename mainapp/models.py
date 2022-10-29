@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class BaseModel(models.Model):
@@ -17,7 +18,7 @@ class BaseModel(models.Model):
 
 
 class NewsManager(models.Manager):
-    def delete(self):
+    def delete(self, *args):
         pass
 
     def get_queryset(self):
@@ -25,7 +26,7 @@ class NewsManager(models.Manager):
 
 
 class News(BaseModel):
-    # objects = NewsManager()
+    objects = NewsManager()
 
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     preamble = models.CharField(max_length=1024, verbose_name='Вступление')
@@ -86,3 +87,7 @@ class CourseTeachers(BaseModel):
 
     def __str__(self) -> str:
         return '{0:0>3} {1} {2}'.format(self.pk, self.name_second, self.name_first)
+
+    class Meta:
+        verbose_name = _("Teacher")
+        verbose_name_plural = _("Teachers")
