@@ -5,18 +5,18 @@ from mainapp import views
 from mainapp.apps import MainappConfig
 
 
-
 app_name = MainappConfig.name
 
 urlpatterns = [
-    path("", views.MainPageView.as_view(), name='main_page'),
+    path("", views.MainPageView.as_view(), name='main'),
     path("login/", views.LoginPageView.as_view(), name='login'),
     path("contacts/", views.ContactsPageView.as_view(), name='contacts'),
     path("doc_site/", views.DocSitePageView.as_view(), name='doc_site'),
 
     # Courses
-    path("courses_list/", cache_page(3600)(views.CoursesListView.as_view()), name='courses'),
-    path("courses_list/<int:pk>/", views.CoursesDetailView.as_view(), name='courses_detail'),
+    path("courses/", cache_page(3600)(views.CoursesListView.as_view()), name='courses'),
+    path("courses/<int:pk>/", views.CoursesDetailView.as_view(), name='courses_detail'),
+    path("course_feedback/", views.CourseFeedbackFormProcessView.as_view(), name="course_feedback"),
 
     # News
     path("news/", views.NewsListView.as_view(), name='news'),

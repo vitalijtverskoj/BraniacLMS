@@ -5,54 +5,60 @@
 <html lang="ru">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
 
-  <!-- ChartJS -->
-  <link rel="stylesheet" href="{% static "css/Chart.min.css" %}">
+    <!-- ChartJS -->
+    <link rel="stylesheet" href="{% static "css/Chart.min.css" %}">
 
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="{% static "css/fontawesome.all.min.css" %}">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="{% static "css/fontawesome.all.min.css" %}">
 
-  <link rel="icon" href="{% static "favicon.ico" %}" type="image/x-icon">
+    <link rel="icon" href="{% static "favicon.ico" %}" type="image/x-icon">
 
-  <title>Welcome to Braniac!</title>
+    <title>
+        {% block title %}
+        Welcome to Braniac!
+        {% endblock title %}
+    </title>
 </head>
 
 <body>
 
-  {% include 'mainapp/components/main_menu.html' %}
+{% include 'mainapp/components/main_menu.html' %}
 
-  <div class="container-md">
+{% block messages %}
+{% include 'authapp/includes/inc_messages.html' %}
+{% endblock messages %}
 
-      {% block content %}
+<div class="container-md">
 
-      Lorem, ipsum dolor.
+    {% block content %}
 
-      {% endblock content %}
+        Lorem, ipsum dolor.
 
-  </div>
+    {% endblock content %}
 
-  {% include 'mainapp/components/footer.html' %}
+</div>
+
+{% include 'mainapp/components/footer.html' %}
 
 
+<!-- JavaScript section -->
+<!-- Bootstrap -->
+<script src="{% static "js/jquery-3.6.0.min.js" %}"></script>
+<script src="{% static "js/popper.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
 
-  <!-- JavaScript section -->
-  <!-- Bootstrap -->
-  <script src="{% static "js/jquery-3.6.0.min.js" %}"></script>
-  <script src="{% static "js/popper.min.js" %}"></script>
-  <script src="{% static "js/bootstrap.min.js" %}"></script>
+<!-- ChartJs -->
+<script src="{% static "js/Chart.min.js" %}"></script>
 
-  <!-- ChartJs -->
-  <script src="{% static "js/Chart.min.js" %}"></script>
-
-  <!-- FontAwesome -->
-  <script src="{% static "js/fontawesome.all.min.js" %}"></script>
-
+<!-- FontAwesome -->
+<script src="{% static "js/fontawesome.all.min.js" %}"></script>
 
 
 </body>

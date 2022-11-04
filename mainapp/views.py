@@ -28,6 +28,7 @@ from mainapp import forms as mainapp_forms
 from mainapp import models as mainapp_models
 from mainapp import tasks as mainapp_tasks
 from django.views import View
+
 # from datetime import datetime
 
 
@@ -45,6 +46,14 @@ class MainPageView(TemplateView):
 #         context = super().get_context_data(**kwargs)
 #
 #         context['news'] = mainapp_models.News.objects.all()[:5]
+#         return context
+
+# class NewsPageDetailView(TemplateView):
+#     template_name = "mainapp/news_detail.html"
+#
+#     def get_context_data(self, pk=None, **kwargs):
+#         context = super().get_context_data(pk=pk, **kwargs)
+#         context["news_object"] = get_object_or_404(mainapp_models.News, pk=pk)
 #         return context
 
 
@@ -135,13 +144,12 @@ class CoursesDetailView(TemplateView):
     def get_context_data(self, pk=None, **kwargs):
         logger.debug("Yet another log message")
         context = super(CoursesDetailView, self).get_context_data(**kwargs)
-        context["course_object"] = get_object_or_404(mainapp_models.Course, pk=pk)
+        context["course_object"] = get_object_or_404(mainapp_models.Courses, pk=pk)
         context["lessons"] = mainapp_models.Lesson.objects.filter(course=context["course_object"])
         context["teachers"] = mainapp_models.CourseTeachers.objects.filter(course=context["course_object"])
         if not self.request.user.is_anonymous:
-            if not mainapp_models.CourseFeedback.objects.filter(
-                    course=context["course_object"], user=self.request.user
-            ).count():
+            if not mainapp_models.CourseFeedback.objects.filter(course=context["course_object"],
+                                                                user=self.request.user).count():
                 context["feedback_form"] = mainapp_forms.CourseFeedbackForm(
                     course=context["course_object"], user=self.request.user
                 )
@@ -151,9 +159,7 @@ class CoursesDetailView(TemplateView):
             context["feedback_list"] = (
                 mainapp_models.CourseFeedback.objects.filter(
                     course=context["course_object"]
-                )
-                .order_by("-created", "-rating")[:5]
-                .select_related()
+                ).order_by("-created", "-rating")[:5].select_related()
             )
             cache.set(
                 f"feedback_list_{pk}", context["feedback_list"], timeout=300
@@ -169,24 +175,8 @@ class CourseFeedbackFormProcessView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        rendered_card = render_to_string("mainapp/includes/feedback_card.html", context={"item": self.object})
+        rendered_card = render_to_string("mainapp/components/feedback_card.html", context={"item": self.object})
         return JsonResponse({"card": rendered_card})
-
-# class CoursesListPageView(TemplateView):
-#     template_name = "mainapp/courses_list.html"
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(CoursesListPageView, self).get_context_data(**kwargs)
-#         context["objects"] = mainapp_models.Course.objects.all()[:7]
-#         return context
-
-
-# class NewsWithPaginatorView(NewsPageView):
-#
-#     def get_context_data(self, page, **kwargs):
-#         context = super().get_context_data(page=page, **kwargs)
-#         context['page_num'] = page
-#         return context
 
 
 class ContactsPageView(TemplateView):
@@ -231,6 +221,23 @@ class ContactsPageView(TemplateView):
 
 class DocSitePageView(TemplateView):
     template_name = "mainapp/doc_site.html"
+
+
+# class CoursesListPageView(TemplateView):
+#     template_name = "mainapp/courses_list.html"
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(CoursesListPageView, self).get_context_data(**kwargs)
+#         context["objects"] = mainapp_models.Course.objects.all()[:7]
+#         return context
+
+
+# class NewsWithPaginatorView(NewsPageView):
+#
+#     def get_context_data(self, page, **kwargs):
+#         context = super().get_context_data(page=page, **kwargs)
+#         context['page_num'] = page
+#         return context
 
 
 class LogView(UserPassesTestMixin, TemplateView):

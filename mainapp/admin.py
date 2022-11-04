@@ -2,16 +2,16 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from mainapp.models import News, Course, Lesson, CourseTeachers
+from mainapp import models as mainapp_models
 
 
-admin.site.register(Course)
+admin.site.register(mainapp_models.Courses)
 
 
-@admin.register(News)
+@admin.register(mainapp_models.News)
 class NewsAdmin(admin.ModelAdmin):
     list_display = ('pk', 'title', 'slug', 'deleted')
-    list_filter = ('deleted', 'created_at')
+    list_filter = ('deleted', 'created')
     ordering = ('pk',)
     list_per_page = 5
     search_fields = ('title', 'preamble', 'body')
@@ -32,10 +32,10 @@ class NewsAdmin(admin.ModelAdmin):
     mark_as_delete.short_description = 'Пометить удалённым'
 
 
-@admin.register(Lesson)
+@admin.register(mainapp_models.Lesson)
 class LessonAdmin(admin.ModelAdmin):
     list_display = ['id', 'get_course_name', 'num', 'title', 'deleted']
-    list_filter = ['course', 'created_at', 'deleted']
+    list_filter = ['course', 'created', 'deleted']
     ordering = ['-course__name', '-num']
     list_per_page = 5
     actions = ['mark_deleted']
@@ -52,7 +52,7 @@ class LessonAdmin(admin.ModelAdmin):
     mark_deleted.short_description = _('Mark deleted')
 
 
-@admin.register(CourseTeachers)
+@admin.register(mainapp_models.CourseTeachers)
 class CourseTeachersAdmin(admin.ModelAdmin):
     list_display = ['id', '__str__', 'get_courses']
     list_select_related = True
