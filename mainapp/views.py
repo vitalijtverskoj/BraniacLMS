@@ -267,4 +267,4 @@ class LogDownloadView(UserPassesTestMixin, View):
 
 
 class LoginPageView(TemplateView):
-    template_name = "authapp/form.html"
+    template_name = "authapp/../authapp/templates/registration/login.html"
