@@ -39,7 +39,7 @@ class CustomUserCreationForm(UserCreationForm):
         return data
 
 
-class CustomUserChangeForm(UserChangeForm):
+class CustomUserChangeForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = (
@@ -63,6 +63,6 @@ class CustomUserChangeForm(UserChangeForm):
     def clean_age(self):
         data = self.cleaned_data.get("age")
 
-        if data < 10 or data > 100:
+        if (data < 10) or (data > 100):
             raise ValidationError(_("Please, enter a valid age!"))
         return data
