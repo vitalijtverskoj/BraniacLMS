@@ -9,9 +9,14 @@
             </p>
             <p>
             <ul class="list-unstyled">
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'mainapp:main' %}">Домашняя</a></li>
+                <li><a href="{% url 'mainapp:news' %}">Новости</a></li>
+            {% else %}
                 <li><a href="{% url 'mainapp:main' %}">Домашняя</a></li>
                 <li><a href="{% url 'mainapp:news' %}">Новости</a></li>
                 <li><a href="{% url 'authapp:login' %}">Войти</a></li>
+            {% endif %}
             </ul>
             </p>
         </div>
