@@ -60,8 +60,8 @@ class Courses(BaseModel):
         return f'#{self.pk} {self.name}'
 
     class Meta:
-        verbose_name = 'Course'
-        verbose_name_plural = 'Courses'
+        verbose_name = _("Course")
+        verbose_name_plural = _("Courses")
 
 
 class Lesson(BaseModel):

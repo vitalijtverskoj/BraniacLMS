@@ -9,7 +9,7 @@ app_name = MainappConfig.name
 
 urlpatterns = [
     path("", views.MainPageView.as_view(), name='main'),
-    path("login/", views.LoginPageView.as_view(), name='login'),
+    # path("login/", views.LoginPageView.as_view(), name='login'),
     path("contacts/", views.ContactsPageView.as_view(), name='contacts'),
     path("doc_site/", views.DocSitePageView.as_view(), name='doc_site'),
 

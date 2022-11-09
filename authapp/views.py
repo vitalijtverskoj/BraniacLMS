@@ -97,7 +97,7 @@ class ProfileEditView(UserPassesTestMixin, UpdateView):
         return True if self.request.user.pk == self.kwargs.get("pk") else False
 
     def get_success_url(self):
-        return reverse_lazy("authapp:edit", args=[self.request.user.pk])
+        return reverse_lazy("authapp:profile_edit", args=[self.request.user.pk])
 
 # class EditView(LoginRequiredMixin, TemplateView):
 #     template_name = 'authapp/edit.html'
