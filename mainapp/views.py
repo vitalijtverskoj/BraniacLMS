@@ -150,10 +150,8 @@ class CoursesDetailView(TemplateView):
         if not self.request.user.is_anonymous:
             if not mainapp_models.CourseFeedback.objects.filter(course=context["course_object"],
                                                                 user=self.request.user).count():
-                context["feedback_form"] = mainapp_forms.CourseFeedbackForm(
-                    course=context["course_object"], user=self.request.user
-                )
-
+                context["feedback_form"] = mainapp_forms.CourseFeedbackForm(course=context["course_object"],
+                                                                            user=self.request.user)
         cached_feedback = cache.get(f"feedback_list_{pk}")
         if not cached_feedback:
             context["feedback_list"] = (

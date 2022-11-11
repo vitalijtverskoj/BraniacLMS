@@ -20,10 +20,10 @@ def users_avatars_path(instanse, filename):
 
 
 class CustomUser(AbstractUser):
-    email = models.EmailField(blank=True, verbose_name="email address", unique=True)
-    age = models.PositiveSmallIntegerField(verbose_name="Age", blank=True, null=True)
-    avatar = models.ImageField(upload_to=users_avatars_path, blank=True, null=True)
+    email = models.EmailField(blank=True, verbose_name=_("email address"), unique=True)
+    age = models.PositiveSmallIntegerField(verbose_name=_("age"), blank=True, null=True)
+    avatar = models.ImageField(upload_to=users_avatars_path, blank=True, null=True, verbose_name=_("avatar"))
 
     class Meta:
-        verbose_name = 'CustomUser'
-        verbose_name_plural = 'CustomUsers'
+        verbose_name = _('CustomUser')
+        verbose_name_plural = _('CustomUsers')
