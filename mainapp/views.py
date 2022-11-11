@@ -240,11 +240,8 @@ class DocSitePageView(TemplateView):
 #         return context
 
 
-class LogView(UserPassesTestMixin, TemplateView):
-    template_name = 'mainapp/logs.html'
-
-    def test_func(self):
-        return self.request.user.is_superuser
+class LogView(TemplateView):
+    template_name = 'mainapp/log_view.html'
 
     def get_context_data(self, **kwargs):
         context = super(LogView, self).get_context_data(**kwargs)
@@ -267,4 +264,4 @@ class LogDownloadView(UserPassesTestMixin, View):
 
 
 class LoginPageView(TemplateView):
-    template_name = "authapp/../authapp/templates/registration/login.html"
+    template_name = "registration/login.html"

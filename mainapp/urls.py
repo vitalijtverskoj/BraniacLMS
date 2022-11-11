@@ -14,7 +14,7 @@ urlpatterns = [
     path("doc_site/", views.DocSitePageView.as_view(), name='doc_site'),
 
     # Courses
-    path("courses/", cache_page(3600)(views.CoursesListView.as_view()), name='courses'),
+    path("courses/", cache_page(60 * 5)(views.CoursesListView.as_view()), name='courses'),
     path("courses/<int:pk>/", views.CoursesDetailView.as_view(), name='courses_detail'),
     path("course_feedback/", views.CourseFeedbackFormProcessView.as_view(), name="course_feedback"),
 
@@ -27,6 +27,6 @@ urlpatterns = [
 
 
     # Logs
-    path('logs/', views.LogView.as_view(), name='logs_list'),
-    path('logs/download/', views.LogDownloadView.as_view(), name='logs_download'),
+    path('log_view/', views.LogView.as_view(), name='log_view'),
+    path('log_download/', views.LogDownloadView.as_view(), name='log_download'),
 ]

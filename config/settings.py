@@ -30,7 +30,8 @@ ALLOWED_HOSTS = ['*']
 
 if DEBUG:
     INTERNAL_IPS = [
-        '127.0.0.1'
+        '127.0.0.1',
+        'localhost'
     ]
 
 # Application definition
@@ -116,6 +117,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'authapp.CustomUser'
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 LOGIN_REDIRECT_URL = 'mainapp:main'
 LOGOUT_REDIRECT_URL = 'mainapp:main'
@@ -131,6 +136,8 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
@@ -153,25 +160,19 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.github.GithubOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
-SOCIAL_AUTH_GITHUB_KEY = '26e9bee17713c476ebb5'
-SOCIAL_AUTH_GITHUB_SECRET = 'd10d1cf3b4787dcbed5980cee3570054a2b0b927'
+SOCIAL_AUTH_GITHUB_KEY = '6b37bbb0998b23786821'
+SOCIAL_AUTH_GITHUB_SECRET = '4fee6fcac55e1822e78de29fda22efca9355b00f'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOG_FILE = BASE_DIR / "log" / "main_log.log"
+LOG_FILE = BASE_DIR / "var" / "log" / "main_log.log"
 
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
         "console": {
-            "format": "[%(asctime)s] %(levelname)s %(name)s (%(lineno)d)%(message)s"
+            "format": "[%(asctime)s] %(levelname)s %(name)s (%(lineno)d) %(message)s"
         },
     },
     "handlers": {
@@ -206,9 +207,9 @@ CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 # Read about sending email:
-# https://docs.djangoproject.com/en/3.2/topics/email/
+#   https://docs.djangoproject.com/en/3.2/topics/email/
 # Full list of email settings:
-# https://docs.djangoproject.com/en/3.2/ref/settings/#email
+#   https://docs.djangoproject.com/en/3.2/ref/settings/#email
 # EMAIL_HOST = "localhost"
 # EMAIL_PORT = "25"
 # For debugging: python -m smtpd -n -c DebuggingServer localhost:25
@@ -217,6 +218,7 @@ CELERY_RESULT_BACKEND = "redis://localhost:6379"
 # EMAIL_USE_SSL = False
 # If server support TLS:
 # EMAIL_USE_TLS = True
+
 # Email as files for debug
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = "var/email-messages/"
