@@ -52,6 +52,12 @@ class NewsTestCase(TestCase):
 
         self.assertEqual(result.status_code, HTTPStatus.OK)
 
+    def test_page_open_detail(self):
+        news_obj = News.objects.first()
+        path = reverse("mainapp:news_detail", args=[news_obj.pk])
+        result = self.client.get(path)
+        self.assertEqual(result.status_code, HTTPStatus.OK)
+
     def test_failed_open_add_by_anonim(self):
         url = reverse('mainapp:news_create')
         result = self.client.get(url)
@@ -73,7 +79,67 @@ class NewsTestCase(TestCase):
         )
 
         self.assertEqual(result.status_code, HTTPStatus.FOUND)
-
         self.assertEqual(News.objects.all().count(), news_count + 1)
 
+    def test_create_in_web(self):
+        counter_before = News.objects.count()
+        path = reverse("mainapp:news_create")
+
+        self.client_with_auth.post(
+            path,
+            data={
+                "title": "NewTestNews001",
+                "preambule": "NewTestNews001",
+                "body": "NewTestNews001",
+            },
+        )
+        self.assertGreater(News.objects.count(), counter_before)
+
+    def test_page_open_update_deny_access(self):
+        news_obj = News.objects.first()
+        path = reverse("mainapp:news_update", args=[news_obj.pk])
+        result = self.client.get(path)
+
+        self.assertEqual(result.status_code, HTTPStatus.FOUND)
+
+    def test_page_open_update_by_admin(self):
+        news_obj = News.objects.first()
+        path = reverse("mainapp:news_update", args=[news_obj.pk])
+        result = self.client_with_auth.get(path)
+
+        self.assertEqual(result.status_code, HTTPStatus.OK)
+
+    def test_update_in_web(self):
+        new_title = "NewTestTitle001"
+        news_obj = News.objects.first()
+
+        self.assertNotEqual(news_obj.title, new_title)
+        path = reverse("mainapp:news_update", args=[news_obj.pk])
+        result = self.client_with_auth.post(
+            path,
+            data={
+                "title": new_title,
+                "preambule": news_obj.preambule,
+                "body": news_obj.body,
+            },
+        )
+
+        self.assertEqual(result.status_code, HTTPStatus.FOUND)
+        news_obj.refresh_from_db()
+        self.assertEqual(news_obj.title, new_title)
+
+    def test_delete_deny_access(self):
+        news_obj = News.objects.first()
+        path = reverse("mainapp:news_delete", args=[news_obj.pk])
+        result = self.client.post(path)
+
+        self.assertEqual(result.status_code, HTTPStatus.FOUND)
+
+    def test_delete_in_web(self):
+        news_obj = News.objects.first()
+        path = reverse("mainapp:news_delete", args=[news_obj.pk])
+
+        self.client_with_auth.post(path)
+        news_obj.refresh_from_db()
+        self.assertTrue(news_obj.deleted)
 
