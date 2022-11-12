@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from authapp.models import CustomUser
-from mainapp.models import News, Courses
+from mainapp.models import News, Courses, Lesson, CourseTeachers
 from mainapp import tasks as mainapp_tasks
 
 
@@ -74,7 +74,6 @@ class NewsTestCase(TestCase):
         self.assertEqual(result.status_code, HTTPStatus.FOUND)
 
     def test_create_news_item_by_admin(self):
-
         news_count = News.objects.all().count()
 
         url = reverse('mainapp:news_create')
@@ -154,19 +153,49 @@ class NewsTestCase(TestCase):
 
 
 class TestCoursesWithMock(TestCase):
-    fixtures = (
-        "authapp/fixtures/001_user_admin.json",
-        "mainapp/fixtures/002_courses.json",
-        "mainapp/fixtures/003_lessons.json",
-        "mainapp/fixtures/004_teachers.json",
-    )
+    # fixtures = (
+    #     "authapp/fixtures/001_user_admin.json",
+    #     "mainapp/fixtures/002_courses.json",
+    #     "mainapp/fixtures/003_lessons.json",
+    #     "mainapp/fixtures/004_teachers.json",
+    # )
+
+    def setUp(self) -> None:
+        super().setUp()
+        for i in range(10):
+            Courses.objects.create(
+                name=f"Course{i}",
+                description=f"description{i}",
+                cost=f"10000",
+            )
+        for i in range(10):
+            Lesson.objects.create(
+                num=f"{i}",
+                title=f"Lesson{i}",
+                description="Описание урока",
+                course_id='1'
+            )
+        for i in range(10):
+            CourseTeachers.objects.create(
+                id=f"{i}",
+                name_first=f"name_first{i}",
+                name_second=f"name_second{i}",
+                day_birth='1990-07-10'
+
+            )
+        CustomUser.objects.create_superuser(username='admin', password='admin')
+        self.client_with_auth = Client()
+        auth_url = reverse('authapp:login')
+        self.client_with_auth.post(
+            auth_url,
+            {'username': 'admin', 'password': 'admin'}
+        )
 
     def test_page_open_detail(self):
         course_obj = Courses.objects.get(pk=2)
         path = reverse("mainapp:courses_detail", args=[course_obj.pk])
-        with open(
-            "mainapp/fixtures/006_feedback_list_2.bin", "rb"
-        ) as inpf, mock.patch("django.core.cache.cache.get") as mocked_cache:
+        with open("mainapp/fixtures/006_feedback_list_1.bin", "rb") as inpf, mock.patch(
+                "django.core.cache.cache.get") as mocked_cache:
             mocked_cache.return_value = pickle.load(inpf)
             result = self.client.get(path)
             self.assertEqual(result.status_code, HTTPStatus.OK)
@@ -174,13 +203,22 @@ class TestCoursesWithMock(TestCase):
 
 
 class TestTaskMailSend(TestCase):
-    fixtures = ("authapp/fixtures/001_user_admin.json",)
+    # fixtures = ("authapp/fixtures/001_user_admin.json",)
+    def setUp(self) -> None:
+        super().setUp()
+        CustomUser.objects.create_superuser(username='admin', password='admin')
+        self.client_with_auth = Client()
+        auth_url = reverse('authapp:login')
+        self.client_with_auth.post(
+            auth_url,
+            {'username': 'admin', 'password': 'admin'}
+        )
 
     def test_mail_send(self):
         message_text = "test_message_text"
         user_obj = CustomUser.objects.first()
         mainapp_tasks.send_feedback_mail(
-        {"user_id": user_obj.id, "message": message_text}
+            {"user_id": user_obj.id, "message": message_text}
         )
         self.assertEqual(django_mail.outbox[0].body, message_text)
 
@@ -227,6 +265,7 @@ class TestNewsSelenium(StaticLiveServerTestCase):
             EC.visibility_of_element_located((By.ID, "id_title"))
         )
         print("Button clickable!")
+
         # With no element - test will be failed
         # WebDriverWait(self.selenium, 5).until(
         # EC.visibility_of_element_located((By.ID, "id_title111"))
