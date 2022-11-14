@@ -19,24 +19,28 @@
 
     <link rel="icon" href="{% static "favicon.ico" %}" type="image/x-icon">
 
-    <title>Welcome to GeekLab!</title>
+    <title>
+    {% block title %}
+    Welcome to Braniac!
+    {% endblock title %}
+    </title>
 </head>
 
 <body>
 
 {% include 'authapp/includes/inc_messages.html' %}
 
-<div class="row justify-content-around align-items-center" style="height: 100vh; margin: 0px">
-    <div class="text-center">
-        <p>
-            <a href="{% url 'mainapp:main' %}"><img src="{% static "img/logo.png" %}" alt=""></a>
-        </p>
-        {% block content %}
-        {% endblock %}
+    <div class="row justify-content-around align-items-center" style="height: 100vh; margin: 0px">
+        <div class="text-center">
+            <p>
+                <a href="{% url 'mainapp:main' %}"><img src="{% static "img/logo.png" %}" alt=""></a>
+            </p>
+            {% block content %}
+            {% endblock %}
 
 
+        </div>
     </div>
-</div>
 
 
 <!-- JavaScript section -->
@@ -50,12 +54,15 @@
 
 <!-- FontAwesome -->
 <script src="{% static "js/fontawesome.all.min.js" %}"></script>
+
+<!-- Toasts -->
 <script>
     $(document).ready(function () {
+
         {% if messages %}
-            // Toasts
-            $(".toast").toast({delay: 5000});
-            $(".toast").toast("show");
+        // Toasts
+        $(".toast").toast({delay: 5000});
+        $(".toast").toast("show");
         {% endif %}
     });
 </script>

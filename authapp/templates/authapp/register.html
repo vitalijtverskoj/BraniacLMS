@@ -6,8 +6,7 @@
             <h3>Регистрация нового пользователя</h3>
             <form method="post" class="mt-2" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div id="div_id_username" class="form-group"><label for="id_username"
-                                                                    class=" requiredField">
+                <div id="div_id_username" class="form-group"><label for="id_username" class=" requiredField">
                     Username<span class="asteriskField">*</span> </label>
                     <div class=""><input type="text" name="username" maxlength="150"
                                          class="textinput textInput form-control" required=""

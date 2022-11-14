@@ -5,11 +5,8 @@
 
             {% for message in messages %}
                 <!-- Then put toasts within -->
-                <div class="toast flex-fill w-100
-    {% if message.level == 30 %}
-    border-warning
-    {% endif %}
-      " role="alert" aria-live="assertive" aria-atomic="true" style="right: 0;">
+                <div class="toast flex-fill w-100 {% if message.level == 30 %} border-warning {% endif %}" role="alert"
+                     aria-live="assertive" aria-atomic="true" style="right: 0;">
                     <div class="toast-header">
                         <span class="mr-2"><i class="far fa-envelope"></i></span>
                         <strong class="mr-auto {% if message.level == 30 %}text-warning{% endif %}">

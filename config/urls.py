@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 import debug_toolbar
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,10 +26,11 @@ from authapp.apps import AuthappConfig
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("i18n/", include('django.conf.urls.i18n')),
     path("", RedirectView.as_view(url="mainapp/")),
+    path("social_auth/", include('social_django.urls', namespace='social')),
     path("mainapp/", include("mainapp.urls", namespace=MainappConfig.name)),
     path("authapp/", include("authapp.urls", namespace=AuthappConfig.name)),
-    path("social_auth/", include('social_django.urls', namespace='social')),
 ]
 
 if settings.DEBUG:
